@@ -1,0 +1,214 @@
+{
+  "_comment": "GitHub Repository Configuration Template - Comprehensive Example",
+  "_documentation": {
+    "purpose": "This file shows all possible configuration options for creating GitHub repositories",
+    "required_fields": ["name", "owner", "description"],
+    "optional_fields": ["visibility", "files", "branch_protection", "environments", "secrets", "variables", "team_access", "user_access", "custom_properties"],
+    "github_token": "Set GITHUB_TOKEN environment variable with a token that has repo, admin:org, and read:org permissions"
+  },
+
+  "_basic_repository_info": "=== REQUIRED FIELDS ===",
+  "name": "my-awesome-project",
+  "owner": "vsbopi",
+  "description": "A comprehensive example of automated GitHub repository creation with all features",
+
+  "_repository_visibility": "=== OPTIONAL - Repository Visibility ===",
+  "visibility": "internal",
+  "_visibility_options": {
+    "public": "Anyone can see this repository",
+    "private": "Only you and people you explicitly share it with can see this repository", 
+    "internal": "Organization members can see this repository (requires organization)"
+  },
+
+  "_custom_properties": "=== OPTIONAL - GitHub Custom Properties ===",
+  "custom_properties": {
+    "Application": "GitHub Management System",
+    "ComplianceAuditToReview": "true",
+    "DeployedToProd": "false", 
+    "ImpactOnProdApp": "high",
+    "POC": "john.doe@company.com",
+    "Owner": "Platform Team",
+    "ProdDeploymentMethod": "GitOps",
+    "Team": "MyTeam"
+  },
+  "_custom_properties_note": "These are organization-level custom properties. If custom properties API fails, they will be added as repository topics instead.",
+
+  "_files_section": "=== OPTIONAL - Repository Files ===",
+  "files": {
+    "readme_content": "# My Awesome Project\n\nThis is an example repository created with automated GitHub repository management.\n\n## Features\n- Automated setup\n- Branch protection\n- Custom properties\n- Team access management\n\n## Getting Started\n\n1. Clone the repository\n2. Install dependencies\n3. Start coding!\n\n## Contributing\n\nPlease read our contributing guidelines before submitting pull requests.",
+    "gitignore_template": "Dotnet"
+  },
+  "_files_options": {
+    "readme_content": "OPTIONAL - Custom README.md content. If empty, a basic README will be created",
+    "gitignore_template": "OPTIONAL - GitHub gitignore template name (e.g., 'Python', 'Node', 'Java', 'Dotnet') or custom content string"
+  },
+
+  "_branch_protection": "=== OPTIONAL - Branch Protection Rules ===",
+  "branch_protection": {
+    "auto_create_branches": true,
+    "_auto_create_note": "If true, branches will be created automatically if they don't exist before applying protection rules",
+    
+    "branches": {
+      "main": {
+        "enable": true,
+        "require_reviews": true,
+        "required_reviews": 2,
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": true,
+        "enforce_admins": false,
+        "required_status_checks": true,
+        "status_contexts": ["ci/build", "ci/test"]
+      },
+      "develop": {
+        "enable": true,
+        "require_reviews": true,
+        "required_reviews": 1,
+        "dismiss_stale_reviews": false,
+        "require_code_owner_reviews": false,
+        "enforce_admins": false,
+        "required_status_checks": true,
+        "status_contexts": ["ci/build"]
+      },
+      "uat": {
+        "enable": true,
+        "require_reviews": true,
+        "required_reviews": 2,
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": true,
+        "enforce_admins": true,
+        "required_status_checks": true,
+        "status_contexts": ["ci/build", "ci/test", "ci/security-scan"]
+      },
+      "prod": {
+        "enable": true,
+        "require_reviews": true,
+        "required_reviews": 3,
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": true,
+        "enforce_admins": true,
+        "required_status_checks": true,
+        "status_contexts": ["ci/build", "ci/test", "ci/security-scan", "ci/performance-test"]
+      }
+    }
+  },
+  "_branch_protection_fields": {
+    "enable": "REQUIRED - Whether to enable protection for this branch",
+    "require_reviews": "OPTIONAL - Require pull request reviews (default: true)",
+    "required_reviews": "OPTIONAL - Number of required reviews (default: 2)",
+    "dismiss_stale_reviews": "OPTIONAL - Dismiss stale reviews when new commits are pushed (default: true)",
+    "require_code_owner_reviews": "OPTIONAL - Require code owner reviews (default: true)",
+    "enforce_admins": "OPTIONAL - Enforce restrictions for administrators (default: false)",
+    "required_status_checks": "OPTIONAL - Require status checks to pass (default: false)",
+    "status_contexts": "OPTIONAL - List of required status check contexts (default: [])"
+  },
+
+  "_environments": "=== OPTIONAL - GitHub Actions Environments ===",
+  "environments": ["development", "staging", "production"],
+  "_environments_note": "List of environment names to create for GitHub Actions deployment workflows",
+
+  "_secrets": "=== OPTIONAL - Repository Secrets ===",
+  "secrets": {
+    "DATABASE_PASSWORD": "super-secret-password-123",
+    "API_KEY": "sk-1234567890abcdef",
+    "JWT_SECRET": "my-jwt-signing-secret",
+    "DEPLOY_TOKEN": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "_secrets_note": "Secrets are encrypted and used in GitHub Actions. Values here will be encrypted before sending to GitHub.",
+
+  "_variables": "=== OPTIONAL - Repository Variables ===",
+  "variables": {
+    "NODE_VERSION": "18.x",
+    "PYTHON_VERSION": "3.11",
+    "ENVIRONMENT": "production",
+    "API_BASE_URL": "https://api.example.com",
+    "DATABASE_URL": "postgresql://localhost:5432/mydb",
+    "CACHE_TTL": "3600"
+  },
+  "_variables_note": "Variables are plain text and used in GitHub Actions workflows and other automation.",
+
+  "_team_access": "=== OPTIONAL - Team Access Management ===",
+  "team_access": {
+    "correspondence": "write",
+    "correspondence-admins": "admin", 
+    "correspondence-prod-deployment-approvers": "maintain",
+    "strategic-correspondence": "write",
+    "strategic-correspondence-admins": "admin",
+    "strategic-correspondence-prod-deployment-approvers": "maintain",
+    "devops-india": "admin",
+    "security-team": "read",
+    "qa-team": "triage"
+  },
+  "_team_access_permissions": {
+    "read": "Can read and clone this repository. Can also open and comment on issues and pull requests",
+    "triage": "Can read and clone this repository. Can also manage issues and pull requests",
+    "write": "Can read, clone, and push to this repository. Can also manage issues and pull requests",
+    "maintain": "Can read, clone, and push to this repository. Can also manage issues, pull requests, and some repository settings",
+    "admin": "Can read, clone, and push to this repository. Can also manage issues, pull requests, and repository settings, including adding collaborators"
+  },
+
+  "_user_access": "=== OPTIONAL - Individual User Access ===",
+  "user_access": {
+    "john.doe": "admin",
+    "jane.smith": "write", 
+    "bob.wilson": "read",
+    "alice.johnson": "maintain",
+    "charlie.brown": "triage"
+  },
+  "_user_access_note": "Individual GitHub usernames and their permission levels. Use GitHub usernames, not email addresses.",
+
+  "_usage_examples": {
+    "minimal_config": {
+      "name": "simple-repo",
+      "owner": "vsbopi", 
+      "description": "A simple repository with minimal configuration"
+    },
+    "development_repo": {
+      "name": "dev-project",
+      "owner": "vsbopi",
+      "description": "Development repository with branch protection",
+      "visibility": "private",
+      "branch_protection": {
+        "auto_create_branches": true,
+        "branches": {
+          "main": {
+            "enable": true,
+            "require_reviews": true,
+            "required_reviews": 1
+          }
+        }
+      }
+    },
+    "production_repo": {
+      "name": "prod-app",
+      "owner": "vsbopi",
+      "description": "Production application with full security",
+      "visibility": "internal",
+      "branch_protection": {
+        "auto_create_branches": true,
+        "branches": {
+          "main": {"enable": true, "require_reviews": true, "required_reviews": 3, "enforce_admins": true},
+          "prod": {"enable": true, "require_reviews": true, "required_reviews": 3, "enforce_admins": true}
+        }
+      },
+      "environments": ["production"],
+      "team_access": {"devops": "admin", "developers": "write"},
+      "secrets": {"DEPLOY_KEY": "secret-value"},
+      "variables": {"ENVIRONMENT": "production"}
+    }
+  },
+
+  "_setup_instructions": {
+    "1": "Set GITHUB_TOKEN environment variable: export GITHUB_TOKEN=your_token_here",
+    "2": "Ensure your token has these scopes: repo, admin:org, read:org",
+    "3": "Copy this file to config.json and modify as needed",
+    "4": "Run: python main.py or python create_repo.py --config config.json",
+    "5": "For interactive mode: python main.py (choose option 2)"
+  },
+
+  "_troubleshooting": {
+    "permission_errors": "Run python diagnose_token.py to check token permissions",
+    "team_errors": "Run python diagnose_teams.py to list available teams and their slugs",
+    "organization_detection": "Use --force-org flag if organization detection fails",
+    "branch_creation": "Set auto_create_branches to false if you want to create branches manually"
+  }
+}

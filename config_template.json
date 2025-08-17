@@ -1,0 +1,184 @@
+{
+  "repository": {
+    "name": "githubRepoManagement",
+    "owner": "vsbopi",
+    "description": "GitHub Repo Management - Create/Update",
+    "visibility": "public"
+  },
+  "custom_properties": {
+    "application": "GitHub",
+    "compliance_audit_to_review": "Yes",
+    "deployed_to_prod": "Yes",
+    "impact_on_prod_app": "Yes",
+    "poc": "john.doe@company.com",
+    "owner": "Platform Team",
+    "prod_deployment_method": "GitOps",
+    "team": "MyTeam"
+  },
+  "files": {
+    "readme_content": "",
+    "gitignore_template": "Dotnet"
+  },
+  "branch_protection": {
+    "auto_create_branches": true,
+    "branches": {
+      "main": {
+        "enable": true,
+        "require_reviews": true,
+        "required_reviews": 1,
+        "dismiss_stale_reviews": false,
+        "require_code_owner_reviews": true,
+        "enforce_admins": true,
+        "require_status_checks": false,
+        "status_checks": []
+      },
+      "prod": {
+        "enable": true,
+        "require_reviews": true,
+        "required_reviews": 1,
+        "dismiss_stale_reviews": false,
+        "require_code_owner_reviews": true,
+        "enforce_admins": true,
+        "require_status_checks": false,
+        "status_checks": []
+      }
+    }
+  },
+  "environments": [
+    "dev",
+    "qa", 
+    "uat",
+    "prod"
+  ],
+  "environment_protection": {
+    "dev": {
+      "wait_timer": 0,
+      "prevent_self_review": false,
+      "deployment_branch_policy": {
+        "protected_branches": false,
+        "custom_branch_policies": false
+      },
+      "reviewers": [
+        {
+          "type": "Team",
+          "id": "vsbopi/strategic-platform"
+        },
+        {
+          "type": "Team",
+          "id": "vsbopi/platform"
+        }
+      ]
+    },
+    "qa": {
+      "wait_timer": 0,
+      "prevent_self_review": false,
+      "deployment_branch_policy": {
+        "protected_branches": false,
+        "custom_branch_policies": false
+      },
+      "reviewers": [
+        {
+          "type": "Team",
+          "id": "vsbopi/strategic-platform"
+        },
+        {
+          "type": "Team",
+          "id": "vsbopi/platform"
+        }
+      ]
+    },
+    "uat": {
+      "wait_timer": 0,
+      "prevent_self_review": true,
+      "deployment_branch_policy": {
+        "protected_branches": false,
+        "custom_branch_policies": true,
+        "custom_branches": ["main", "prod"]
+      },
+      "reviewers": [
+        {
+          "type": "Team", 
+          "id": "vsbopi/strategic-platform-prod-deployment-approvers"
+        },
+        {
+          "type": "Team",
+          "id": "vsbopi/platform-prod-deployment-approvers"
+        }
+      ]
+    },
+    "prod": {
+      "wait_timer": 0,
+      "prevent_self_review": true,
+      "deployment_branch_policy": {
+        "protected_branches": true,
+        "custom_branch_policies": false
+      },
+      "reviewers": [
+        {
+          "type": "Team", 
+          "id": "vsbopi/strategic-platform-prod-deployment-approvers"
+        },
+        {
+          "type": "Team",
+          "id": "vsbopi/platform-prod-deployment-approvers"
+        }
+      ]
+    }
+  },
+  "secrets": {
+  },
+  "variables": {
+    "APP_TEAM": "strategic_platform",
+    "AWS_REGION": "us-east-1",
+    "BUILD_ECR_URL": "AWSACCOUNTNUMBER.dkr.ecr.us-east-1.amazonaws.com",
+    "BUILD_ROLE_ARN": "arn:aws:iam::AWSACCOUNTNUMBER:role/Strategicplatform-Azure-Role",
+    "ENV_REPO": "nextgen-platform-cds",
+    "JAVA_VERSION": "21",
+    "REGION": "us-east-1",
+    "STAGE_ECR_URL": "AWSACCOUNTNUMBER.dkr.ecr.us-east-1.amazonaws.com",
+    "STAGE_REPO": "nextgen-platform-cds"
+  },
+  "environment_secrets": {
+    "dev": {
+    },
+    "qa": {
+    },
+    "uat": {
+    },
+    "prod": {
+    }
+  },
+  "environment_variables": {
+    "dev": {
+      "ASSUME_ROLE_ARN": "arn:aws:iam::AWSACCOUNTNUMBER:role/Strategicplatform-Azure-Role",
+      "ENV_ECR_URL": "AWSACCOUNTNUMBER.dkr.ecr.us-east-1.amazonaws.com",
+      "ENVIRONMENT": "dev"
+    },
+    "qa": {
+      "ASSUME_ROLE_ARN": "arn:aws:iam::AWSACCOUNTNUMBER:role/Strategicplatform-Azure-Role",
+      "ENV_ECR_URL": "AWSACCOUNTNUMBER.dkr.ecr.us-east-1.amazonaws.com",
+      "ENVIRONMENT": "qa"
+    },
+    "uat": {
+      "ASSUME_ROLE_ARN": "arn:aws:iam::AWSACCOUNTNUMBER:role/github-actions",
+      "ENV_ECR_URL": "AWSACCOUNTNUMBER.dkr.ecr.us-east-1.amazonaws.com",
+      "ENVIRONMENT": "uat"
+    },
+    "prod": {
+      "ASSUME_ROLE_ARN": "arn:aws:iam::AWSACCOUNTNUMBER:role/github-actions",
+      "ENV_ECR_URL": "AWSACCOUNTNUMBER.dkr.ecr.us-east-1.amazonaws.com",
+      "ENVIRONMENT": "prod"
+    }
+  },
+  "team_access": {
+    "platform": "push",
+    "platform-admins": "admin",
+    "platform-prod-deployment-approvers": "maintain",
+    "strategic-platform": "push",
+    "strategic-platform-admins": "admin",
+    "strategic-platform-prod-deployment-approvers": "maintain",
+    "devops-india": "admin"
+  },
+  "user_access": {
+  }
+}
